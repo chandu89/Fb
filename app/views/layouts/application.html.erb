@@ -18,18 +18,26 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload", media: "all" %>
+
   </head>
 
-  <body>
+<body class="bg-gray-100 text-gray-900">
+    
     <% if user_signed_in? %>
-      <p>Welcome, <%= current_user.email %> | <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure?" } %>
-</p>
-    <% else %>
-      <p><%= link_to 'Login', new_user_session_path %> | <%= link_to 'Sign up', new_user_registration_path %></p>
+      <div class="user-info">
+        <p>Welcome, <%= current_user.email %> |
+          <%= link_to "Profile Settings", edit_profile_path %> |
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure?" } %>
+        </p>
+      </div>
     <% end %>
 
-    <%= yield %>
-  </body>
+   
+  <%= yield %>
+</body>
+
 </html>

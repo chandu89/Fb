@@ -1,0 +1,48 @@
+<!-- app/views/profiles/edit.html.erb -->
+<div class="min-h-screen bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 py-12">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8">Edit Profile</h2>
+
+    <%= form_for(@user, url: profile_path) do |f| %>
+      <% if @user.errors.any? %>
+        <div class="bg-red-100 text-red-700 border border-red-400 rounded-lg p-4 mb-6">
+          <h4 class="font-semibold text-lg">Oops, something went wrong!</h4>
+          <ul class="list-disc pl-6">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- First Name -->
+      <div class="mb-6">
+        <%= f.label :first_name, class: "block text-gray-700 font-semibold mb-2" %>
+        <%= f.text_field :first_name, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+
+      <!-- Last Name -->
+      <div class="mb-6">
+        <%= f.label :last_name, class: "block text-gray-700 font-semibold mb-2" %>
+        <%= f.text_field :last_name, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-6">
+        <%= f.label :email, class: "block text-gray-700 font-semibold mb-2" %>
+        <%= f.email_field :email, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+
+      <!-- Profile Picture -->
+      <div class="mb-6">
+        <%= f.label :profile_picture, "Profile Picture", class: "block text-gray-700 font-semibold mb-2" %>
+        <%= f.file_field :profile_picture, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <%= f.submit "Update Profile", class: "w-full py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-300" %>
+      </div>
+    <% end %>
+  </div>
+</div>

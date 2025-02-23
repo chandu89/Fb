@@ -1,0 +1,36 @@
+<!-- app/views/profiles/show.html.erb -->
+<div class="min-h-screen bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 py-12">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8">Your Profile</h2>
+
+    <!-- Display Name -->
+    <div class="mb-6">
+      <strong class="text-gray-700 text-lg">Full Name:</strong>
+      <p class="text-gray-600 text-xl"><%= @user.first_name %> <%= @user.last_name %></p>
+    </div>
+
+    <!-- Display Email -->
+    <div class="mb-6">
+      <strong class="text-gray-700 text-lg">Email:</strong>
+      <p class="text-gray-600 text-xl"><%= @user.email %></p>
+    </div>
+
+    <!-- Display Profile Picture -->
+    <% if @user.profile_picture.attached? %>
+      <div class="mb-6">
+        <strong class="text-gray-700 text-lg">Profile Picture:</strong>
+        <%= image_tag @user.profile_picture, class: 'w-32 h-32 rounded-full object-cover mt-4' %>
+      </div>
+    <% else %>
+      <div class="mb-6">
+        <strong class="text-gray-700 text-lg">Profile Picture:</strong>
+        <p class="text-gray-600 mt-4">No profile picture uploaded</p>
+      </div>
+    <% end %>
+
+    <!-- Edit Profile Link -->
+    <div class="mt-6 text-center">
+      <%= link_to 'Edit Profile', edit_profile_path, class: "py-3 px-8 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105" %>
+    </div>
+  </div>
+</div>

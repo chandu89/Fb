@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "profiles/show"
+  get "profiles/edit"
+  get "profiles/update"
   resources :posts
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,4 +16,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "posts#index"
+  resource :profile, only: [:show, :edit, :update]
 end

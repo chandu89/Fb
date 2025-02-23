@@ -8,3 +8,24 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.user-info {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+}
+
+.user-info a {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.user-info a:hover {
+  background-color: #0056b3;
+}
+
