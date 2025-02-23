@@ -1,0 +1,25 @@
+<h1>Posts</h1>
+
+<% @posts.each do |post| %>
+  <div>
+    <p>
+      <strong><%= post.user&.email || "Unknown User" %></strong>:
+    </p>
+    <p><%= post.content %></p>
+    
+    <% if post.image.attached? %>
+      <%= image_tag post.image, width: 200 %>
+    <% end %>
+
+    <p>
+      <%= link_to 'Show', post_path(post) %>
+      <% if post.user == current_user %>
+        | <%= link_to 'Edit', edit_post_path(post) %>
+        | <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+<% end %>
+
+<%= link_to 'New Post', new_post_path %>
