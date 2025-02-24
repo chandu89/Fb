@@ -83,7 +83,7 @@ production:
     <<: *default
     database: fb_production
     username: fb_username
-    password: <%= ENV["FB_DATABASE_PASSWORD"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: fb_production_cache
