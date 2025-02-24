@@ -81,8 +81,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: fb_production
-    username: fb_username
+    database: render_fb
+    username: render_fb_user
     password: <%= ENV["DATABASE_PASSWORD"] %>
     port: 5432
   cache:
