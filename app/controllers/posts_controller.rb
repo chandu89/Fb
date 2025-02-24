@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
-    @posts = current_user.posts.all
+    @posts = Post.order(created_at: :desc)
   end
 
   def show; end
