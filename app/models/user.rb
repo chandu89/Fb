@@ -8,5 +8,12 @@ class User < ApplicationRecord
   has_many :comments
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
-  searchkick word_start: [:first_name, :last_name]
+  # searchkick word_start: [:first_name, :last_name]
+  include PgSearch::Model
+
+  pg_search_scope :search_by_name, 
+                  against: [:first_name, :last_name],
+                  using: {
+                    tsearch: { prefix: true } # for "word_start" match
+                  }
 end
