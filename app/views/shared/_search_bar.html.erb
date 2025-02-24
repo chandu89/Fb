@@ -37,14 +37,18 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => response.json())
     .then(data => {
       if (data.results && data.results.length > 0) {
-        resultsContainer.innerHTML = data.results.map(user => `
-          <div class="user-result py-2 px-4 border-b cursor-pointer hover:bg-indigo-100 transition duration-200"
-               data-user-id="${user.user_id}">
-            ${user.first_name} ${user.last_name}
-          </div>
-        `).join("");
+        resultsContainer.innerHTML = `
+          <ul class="divide-y divide-gray-200">
+            ${data.results.map(user => `
+              <li class="user-result py-2 px-4 cursor-pointer hover:bg-indigo-100 transition duration-200"
+                  data-user-id="${user.user_id}">
+                ${user.first_name} ${user.last_name}
+              </li>
+            `).join("")}
+          </ul>
+        `;
 
-        // Attach click event to navigate to the User#show page
+        // Attach click event to each <li> item
         document.querySelectorAll(".user-result").forEach(item => {
           item.addEventListener("click", function () {
             const userId = this.getAttribute("data-user-id");
@@ -60,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch(error => console.error("Error fetching search results:", error));
   });
 });
+
 
 
 </script>
