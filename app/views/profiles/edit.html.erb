@@ -1,4 +1,3 @@
-<!-- app/views/profiles/edit.html.erb -->
 <div class="min-h-screen bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 py-12">
   <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8">Edit Profile</h2>
@@ -36,7 +35,21 @@
       <!-- Profile Picture -->
       <div class="mb-6">
         <%= f.label :profile_picture, "Profile Picture", class: "block text-gray-700 font-semibold mb-2" %>
-        <%= f.file_field :profile_picture, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <div class="flex items-center space-x-4">
+          <!-- Custom File Upload Button -->
+          <label for="profile_picture" class="cursor-pointer bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700 transition duration-300 flex items-center">
+            <i class="fas fa-upload mr-2"></i> Choose File
+          </label>
+          <%= f.file_field :profile_picture, id: "profile_picture", class: "hidden", onchange: "previewImage(event)" %> <!-- Hidden file input field -->
+          <!-- Display selected file name -->
+          <span id="file-name" class="text-gray-600">No file selected</span>
+        </div>
+
+        <!-- Image Preview Container -->
+        <div id="image-preview" class="mt-4 hidden">
+          <img id="preview-image" class="w-32 h-32 rounded-full object-cover" alt="Image Preview">
+          <button type="button" onclick="removePreview()" class="mt-2 text-red-500 hover:text-red-700">Remove Image</button>
+        </div>
       </div>
 
       <!-- Submit Button -->
@@ -46,3 +59,40 @@
     <% end %>
   </div>
 </div>
+
+<!-- JavaScript to show selected file name and preview -->
+<script>
+  document.getElementById('profile_picture').addEventListener('change', function() {
+    const fileName = this.files.length > 0 ? this.files[0].name : 'No file selected';
+    document.getElementById('file-name').textContent = fileName;
+  });
+
+  function previewImage(event) {
+    const previewImage = document.getElementById("preview-image");
+    const previewContainer = document.getElementById("image-preview");
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewContainer.classList.remove("hidden"); // Show the preview container
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function removePreview() {
+    const previewImage = document.getElementById("preview-image");
+    const previewContainer = document.getElementById("image-preview");
+    const fileInput = document.getElementById("profile_picture");
+
+    // Clear the preview image and hide the preview container
+    previewImage.src = "";
+    previewContainer.classList.add("hidden"); // Hide the preview container
+
+    // Reset the file input
+    fileInput.value = "";
+    document.getElementById('file-name').textContent = 'No file selected';
+  }
+</script>
