@@ -1,0 +1,26 @@
+<nav class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md sticky top-0 z-10 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Home Button (Left) -->
+      <div class="flex-shrink-0">
+        <%= link_to "Home", root_path, class: "text-2xl font-bold text-white hover:text-indigo-200 transition duration-300" %>
+      </div>
+
+      <!-- User Info (Right) -->
+      <div class="hidden sm:flex items-center space-x-6">
+        <p class="text-white">
+          Welcome, <%= current_user.first_name || current_user.email || "Unknown User" %>
+        </p>
+        <%= link_to "Profile Settings", edit_profile_path, class: "text-white hover:text-indigo-200 transition duration-300" %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-400 hover:text-red-500 transition duration-300" %>
+      </div>
+      
+      <!-- Mobile menu button (visible on small screens) -->
+      <div class="sm:hidden flex items-center">
+        <button class="text-white hover:text-indigo-200 focus:outline-none">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

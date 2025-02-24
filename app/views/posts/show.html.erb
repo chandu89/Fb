@@ -7,7 +7,7 @@
            alt="User Avatar" 
            class="w-14 h-14 rounded-full object-cover border-2 border-indigo-500">
       <div>
-        <p class="text-lg font-semibold text-gray-800"><%= @post.user.email %></p>
+        <p class="text-lg font-semibold text-gray-800"><%= @post.user.first_name %></p>
         <p class="text-sm text-gray-500"><%= @post.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
       </div>
     </div>
@@ -26,9 +26,16 @@
 
     <% if @post.user == current_user %>
       <div class="mt-6 flex justify-between items-center border-t pt-4">
-        <%= link_to 'Edit', edit_post_path(@post), class: "py-2 px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300" %>
-        <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, 
-          class: "py-2 px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300" %>
+        <%= link_to edit_post_path(@post), class: "text-blue-500 hover:text-blue-600 transition duration-300" do %>
+  <i class="fas fa-edit"></i> <!-- Edit icon -->
+<% end %>
+
+  <%= link_to post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, 
+    class: "text-red-500 hover:text-red-600 transition duration-300" do %>
+    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+  <% end %>
+
+
       </div>
     <% end %>
 
@@ -55,11 +62,6 @@
       <div class="mt-6">
         <%= form_with(model: [ @post, @comment ], url: post_comments_path(@post), local: true) do |form| %>
           <div class="mb-4 flex items-center space-x-2">
-            <!-- Comment Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-600">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12h3l-4 4m0 0l-4-4m4 4V6M4 6v12c0 1.104.896 2 2 2h12c1.104 0 2-.896 2-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2z"/>
-            </svg>
-
             <%= form.text_area :content, placeholder: 'Write a comment...', class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
           </div>
 
