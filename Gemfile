@@ -67,3 +67,7 @@ gem "devise", "~> 4.9"
 gem "tailwindcss-rails", "~> 3.3.1"
 
 gem "pry", "~> 0.15.2"
+
+gem "searchkick", "~> 5.4"
+
+gem "elasticsearch", "~> 8.17"

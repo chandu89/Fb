@@ -1,0 +1,65 @@
+<div class="w-full max-w-md mx-auto mt-6">
+  <%= form_with(url: users_path, method: :get, remote: true, class: "flex") do %>
+    <%= text_field_tag :query, params[:query], placeholder: "Search users...", 
+        class: "flex-1 px-4 py-2 text-gray-800 border border-gray-300 rounded-l-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-200 ease-in-out", id: "query" %>
+    <%= submit_tag "Search", class: "px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out" %>
+  <% end %>
+
+  <!-- Search results container -->
+  <div id="search-results" class="mt-2 bg-white shadow-xl rounded-lg border border-gray-200 max-h-60 overflow-y-auto transition-all duration-300 ease-in-out transform hover:scale-105">
+    <!-- Example search result list -->
+    <ul class="divide-y divide-gray-200">
+      <!-- More list items -->
+    </ul>
+  </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("query");
+  const resultsContainer = document.getElementById("search-results");
+
+  if (!searchInput || !resultsContainer) return;
+
+  searchInput.addEventListener("input", function () {
+    const query = searchInput.value.trim();
+
+    if (query.length < 3) {
+      resultsContainer.innerHTML = ""; // Clear results for short queries
+      return;
+    }
+
+    fetch(`/users?query=${encodeURIComponent(query)}`, {
+      method: "GET",
+      headers: { "Accept": "application/json" }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.results && data.results.length > 0) {
+        resultsContainer.innerHTML = data.results.map(user => `
+          <div class="user-result py-2 px-4 border-b cursor-pointer hover:bg-indigo-100 transition duration-200"
+               data-user-id="${user.user_id}">
+            ${user.first_name} ${user.last_name}
+          </div>
+        `).join("");
+
+        // Attach click event to navigate to the User#show page
+        document.querySelectorAll(".user-result").forEach(item => {
+          item.addEventListener("click", function () {
+            const userId = this.getAttribute("data-user-id");
+            if (userId) {
+              window.location.href = `/users/${userId}`;
+            }
+          });
+        });
+      } else {
+        resultsContainer.innerHTML = `<p class="py-2 px-4 text-gray-500">No users found</p>`;
+      }
+    })
+    .catch(error => console.error("Error fetching search results:", error));
+  });
+});
+
+
+</script>

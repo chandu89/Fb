@@ -25,17 +25,16 @@
     <% end %>
 
     <% if @post.user == current_user %>
-      <div class="mt-6 flex justify-between items-center border-t pt-4">
-        <%= link_to edit_post_path(@post), class: "text-blue-500 hover:text-blue-600 transition duration-300" do %>
-  <i class="fas fa-edit"></i> <!-- Edit icon -->
-<% end %>
+      <div class="flex space-x-4 mb-6">
+        <%= link_to edit_post_path(@post), class: "text-blue-500 hover:text-blue-700 transition-all duration-300 text-lg flex items-center space-x-2" do %>
+          <i class="fas fa-edit text-xl"></i> 
+          <span class="hidden sm:inline">Edit</span>
+        <% end %>
 
-  <%= link_to post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, 
-    class: "text-red-500 hover:text-red-600 transition duration-300" do %>
-    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-  <% end %>
-
-
+        <%= button_to post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-500 hover:text-red-700 transition-all duration-300 text-lg flex items-center space-x-2" do %>
+          <i class="fas fa-trash-alt text-xl"></i> 
+          <span class="hidden sm:inline">Delete</span>
+        <% end %>
       </div>
     <% end %>
 

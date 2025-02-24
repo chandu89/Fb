@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!  # Ensure users are logged in
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[show edit update destroy update_like]
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
@@ -50,6 +50,23 @@ class PostsController < ApplicationController
       redirect_to @post, notice: "Comment was successfully added."
     else
       redirect_to @post, alert: "Error adding comment."
+    end
+  end
+
+  def update_like
+    # Toggle the like status for the current user and the post
+    if current_user.liked_posts.include?(@post)
+      # If the user has already liked the post, remove the like
+      current_user.likes.find_by(post: @post).destroy
+    else
+      # Otherwise, create a new like
+      current_user.likes.create(post: @post)
+    end
+
+    # Respond with a JSON response or redirect
+    respond_to do |format|
+      format.html { redirect_to posts_path, notice: 'Like status updated.' }
+      format.json { render json: { likes_count: @post.likes.count, liked_by_users: @post.liked_by_users.pluck(:first_name) } }
     end
   end
 

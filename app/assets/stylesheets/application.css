@@ -41,5 +41,21 @@
 .home-button:hover {
   text-decoration: underline;
 }
+/* Add in your application's CSS or Tailwind custom styles */
+#search-results {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.user-result {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
 
+.user-result:hover {
+  background-color: #f0f0f0;
+}

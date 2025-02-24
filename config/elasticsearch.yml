@@ -1,0 +1,9 @@
+development:
+  host: "localhost:9200"
+  transport_options:
+    request: { timeout: 5 }
+
+production:
+  host: "your_production_elasticsearch_url"
+  transport_options:
+    request: { timeout: 5 }
