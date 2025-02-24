@@ -7,7 +7,10 @@ class PostsController < ApplicationController
     @posts = Post.order(created_at: :desc)
   end
 
-  def show; end
+  def show
+    @comment = Comment.new  # Initialize a new comment object
+    @comments = @post.comments.includes(:user)  # Load existing comments for the post
+  end
 
   def new
     @post = current_user.posts.build
@@ -19,7 +22,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      redirect_to @post, notice: "Post was successfully created."
+      redirect_to posts_path, notice: "Post was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +30,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: "Post was successfully updated."
+      redirect_to posts_path, notice: "Post was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,6 +41,18 @@ class PostsController < ApplicationController
     redirect_to posts_url, notice: "Post was successfully deleted."
   end
 
+  # Comment creation action
+  def create_comment
+    @comment = @post.comments.new(comment_params)
+    @comment.user = current_user  # Assign the current user to the comment
+
+    if @comment.save
+      redirect_to @post, notice: "Comment was successfully added."
+    else
+      redirect_to @post, alert: "Error adding comment."
+    end
+  end
+
   private
 
   def set_post
@@ -46,6 +61,10 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:content, :image)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
   end
 
   def authorize_user!

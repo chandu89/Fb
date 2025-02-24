@@ -12,21 +12,68 @@
 
   <div class="mb-6">
     <%= form.label :content, class: "block text-gray-700 font-semibold mb-2" %>
-    <%= form.text_area :content, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <%= form.text_area :content, class: "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "What's on your mind?" %>
   </div>
 
-  <div class="mb-6">
-    <%= form.label :image, class: "block text-gray-700 font-semibold mb-2" %>
-    <%= form.file_field :image, class: "w-full text-gray-700 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  <div class="mb-6 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <%= form.label :image, class: "block text-gray-700 font-semibold mb-2" %>
+      <label for="post_image" class="flex items-center space-x-2 text-indigo-600 cursor-pointer hover:text-indigo-800">
+        <%= form.file_field :image, class: "hidden", id: "post_image", accept: "image/*", onchange: "previewImage(event)" %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 6.232l2.536-2.536a2.828 2.828 0 014 4l-2.536 2.536m-3.536 3.536l-9.192 9.192a2 2 0 11-2.828-2.828l9.192-9.192m6.536 6.536l-3.536-3.536"></path>
+        </svg>
+        <span class="text-sm font-medium">Attach Image</span>
+      </label>
+    </div>
+
+    <div>
+      <%= form.submit "Save Post", class: "py-2 px-6 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" %>
+    </div>
   </div>
 
   <% if post.image.attached? %>
     <div class="mb-6">
-      <%= image_tag post.image, class: "rounded-xl shadow-lg max-w-full" %>
+      <strong class="text-lg text-gray-800">Current Image Preview:</strong>
+      <%= image_tag post.image, class: "rounded-xl shadow-lg max-w-full mt-4" %>
     </div>
   <% end %>
 
-  <div class="text-center">
-    <%= form.submit "Save Post", class: "py-3 px-8 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  <div id="image-preview" class="mb-6 hidden relative">
+    <strong class="text-lg text-gray-800">New Image Preview:</strong>
+    <!-- Cross Button with Improved Styling -->
+    <button type="button" id="remove-preview" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-2 text-xl hover:bg-red-600 transition-all" onclick="removePreview()">×</button>
+    <img id="preview-image" src="" class="rounded-xl shadow-lg max-w-full mt-4" />
   </div>
+
 <% end %>
+
+<script>
+  function previewImage(event) {
+    const previewImage = document.getElementById("preview-image");
+    const previewContainer = document.getElementById("image-preview");
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewContainer.classList.remove("hidden"); // Show the preview container
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function removePreview() {
+    const previewImage = document.getElementById("preview-image");
+    const previewContainer = document.getElementById("image-preview");
+    const fileInput = document.getElementById("post_image");
+
+    // Clear the preview image and hide the preview container
+    previewImage.src = "";
+    previewContainer.classList.add("hidden"); // Hide the preview container
+
+    // Reset the file input
+    fileInput.value = "";
+  }
+</script>

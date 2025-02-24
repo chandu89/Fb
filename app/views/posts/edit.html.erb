@@ -1,17 +1,18 @@
 <% content_for :title, "Editing Post" %>
 
 <div class="min-h-screen bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 py-12">
-  <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-2xl">
-    <h1 class="text-4xl font-bold text-gray-800 text-center mb-8">Editing Post</h1>
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+    <h1 class="text-4xl font-bold text-gray-800 text-center mb-8">Edit Your Post</h1>
 
     <%= render "form", post: @post %>
 
-    <div class="flex justify-between items-center mt-8">
+    <!-- Footer Navigation Links -->
+    <div class="flex justify-between items-center mt-8 space-x-6">
       <div>
-        <%= link_to "Show this post", @post, class: "text-blue-500 hover:underline" %>
+        <%= link_to "View Post", @post, class: "text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300" %>
       </div>
       <div>
-        <%= link_to "Back to posts", posts_path, class: "text-blue-500 hover:underline" %>
+        <%= link_to "Back to Posts", posts_path, class: "text-gray-600 font-semibold hover:text-gray-800 transition duration-300" %>
       </div>
     </div>
   </div>

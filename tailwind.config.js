@@ -1,7 +1,6 @@
 module.exports = {
-  content: ["./app/views/**/*.html.erb", "./app/helpers/**/*.rb", "./app/assets/javascripts/**/*.js", "./app/javascript/**/*.js"],
-  theme: {
-    extend: {},
+  purge: {
+    content: ['./app/views/**/*.html.erb', './app/javascript/**/*.js'],
+    safelist: ['hidden', 'block'],
   },
-  plugins: [],
-};
+}
