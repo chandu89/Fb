@@ -84,6 +84,7 @@ production:
     database: fb_production
     username: fb_username
     password: <%= ENV["DATABASE_PASSWORD"] %>
+    port: 5432
   cache:
     <<: *primary_production
     database: fb_production_cache
